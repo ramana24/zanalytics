@@ -55,8 +55,37 @@ Analytics -
  Migrate - 
  WebIDE / or older version - 
  Ensure below steps in place  before start of project - 
- - Prototype
- - Destinations
- - Git / BTP login, git repostiory,SAP System , node.js
+ - Prototype - url-https://www.figma.com/file/2OxRcHowDhLPga7lfTaNYG/Untitled?type=whiteboard&node-id=0%3A1&t=wCTfamfG47XBgqb5-1
+ - Add Destinations[Uploading#Password=<< Existing password/certificate removed on export >>
+#
+#Thu Feb 15 08:12:52 UTC 2024
+Description=test service
+Type=HTTP
+sap-platform=ABAP
+HTML5.DynamicDestination=true
+Authentication=BasicAuthentication
+WebIDEUsage=true
+Name=ES5
+WebIDEEnabled=true
+ProxyType=Internet
+URL=https\://sapes5.sapdevcenter.com/
+User=P2003463249
+
+#
+#Thu Feb 15 08:12:43 UTC 2024
+Description=test service
+Type=HTTP
+sap-platform=ABAP
+HTML5.DynamicDestination=true
+Authentication=NoAuthentication
+WebIDEUsage=true
+Name=Northwind
+WebIDEEnabled=true
+ProxyType=Internet
+URL=https\://services.odata.org/
+ ES5_Destination…]()
+ - BTP login  use cf login command
+ - Link SAP System
+ - Link Git Repository 
  -
  
