@@ -39,4 +39,53 @@ An SAP Fiori application.
 
 1. Active NodeJS LTS (Long Term Support) version and associated supported NPM version.  (See https://nodejs.org)
 
+#### Preview:
+https://www.figma.com/file/2OxRcHowDhLPga7lfTaNYG/Untitled?type=whiteboard&node-id=0%3A1&t=fJkofAn2j2r5qZrs-1
+#### Prototype:
+<img width="663" alt="image" src="https://github.com/ramana24/zanalytics/assets/16117165/970d9bf4-0c49-4ffe-88ac-be44c276759b">
 
+#### Notes:
+Analytics -
+
+ Annotations -  OVP (Annotations - analytical) , ALP - Annotations. ()
+ UI5 - Charts - Viz frame  < 10 K data - <1 lakh. ~ Viz frame
+ Smart Business Runtime - Manage KPI. High volume data . > 10k, ALP can be created using manage KPi.
+ 
+ 
+ Migrate - 
+ WebIDE / or older version - 
+ Ensure below steps in place  before start of project - 
+ - Prototype - url-https://www.figma.com/file/2OxRcHowDhLPga7lfTaNYG/Untitled?type=whiteboard&node-id=0%3A1&t=wCTfamfG47XBgqb5-1
+ - Add Destinations[Uploading#Password=<< Existing password/certificate removed on export >>
+#
+#Thu Feb 15 08:12:52 UTC 2024
+Description=test service
+Type=HTTP
+sap-platform=ABAP
+HTML5.DynamicDestination=true
+Authentication=BasicAuthentication
+WebIDEUsage=true
+Name=ES5
+WebIDEEnabled=true
+ProxyType=Internet
+URL=https\://sapes5.sapdevcenter.com/
+User=P2003463249
+
+#
+#Thu Feb 15 08:12:43 UTC 2024
+Description=test service
+Type=HTTP
+sap-platform=ABAP
+HTML5.DynamicDestination=true
+Authentication=NoAuthentication
+WebIDEUsage=true
+Name=Northwind
+WebIDEEnabled=true
+ProxyType=Internet
+URL=https\://services.odata.org/
+ ES5_Destination…]()
+ - BTP login  use cf login command
+ - Link SAP System
+ - Link Git Repository 
+ -
+ 
