@@ -1,136 +1,310 @@
-<mvc:View xmlns:core="sap.ui.core" controllerName="ux.zanalytics.controller.View1"
-    xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns:micro ="sap.suite.ui.microchart"
-    xmlns="sap.m">
-    <Page id="page" showHeader="false" >
+<mvc:View xmlns:core="sap.ui.core" controllerName="ux.zanalytics.controller.View1" xmlns:f="sap.ui.layout.form" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns:micro="sap.suite.ui.microchart" xmlns="sap.m">
+    <Page id="page" showHeader="false">
         <content>
 
-<VBox class="sapUiMediumMargin">
+            <VBox
+                class="sapUiMediumMargin">
 
-<!-- <Text text="page"></Text> -->
-<HBox >
+                <!-- <Text text="page"></Text> -->
+                <HBox>
 
 
+                    <!-- <Text text="section 1"></Text> -->
 
-<!-- <Text text="section 1"></Text> -->
+                    <Image class="sapUiTinyMarginEnd" src="../image/tata logo transparent.png" width="70px" height="70px"></Image>
+                    <!-- <core:Icon src="sap-icon://sap-ui5"></core:Icon> -->
 
-<Image class="sapUiTinyMarginEnd" src="../image/tata logo transparent.png" width="70px" height="70px"></Image>
-<!-- <core:Icon src="sap-icon://sap-ui5"></core:Icon> -->
+                    <HBox>
 
-<HBox>
 
-	
-
-<FlexBox class="sapUiMediumMarginBegin sapUiTinyMarginTop tileLayout" height="100px" width="170px" renderType="Bare">
-							<micro:ComparisonMicroChart scale="M"  maxValue="" minValue="" press="press">
-								<micro:data>
-									<micro:ComparisonMicroChartData title="Americas" value="10" color="Good" />
-									<micro:ComparisonMicroChartData title="EMEA" value="50" color="Good" />
-									<micro:ComparisonMicroChartData title="APAC" value="-20" color="Error" />
-								</micro:data>
-							</micro:ComparisonMicroChart>
+                        <FlexBox class="sapUiMediumMarginBegin sapUiTinyMarginTop tileLayout" height="100px" width="170px" renderType="Bare">
+                            <micro:ComparisonMicroChart scale="M" maxValue="" minValue="" press="press">
+                                <micro:data>
+                                    <micro:ComparisonMicroChartData title="Americas" value="10" color="Good"/>
+                                    <micro:ComparisonMicroChartData title="EMEA" value="50" color="Good"/>
+                                    <micro:ComparisonMicroChartData title="APAC" value="-20" color="Error"/>
+                                </micro:data>
+                            </micro:ComparisonMicroChart>
 
                             <!-- scale - M,B, K  Amount, state- positive,negative , Max , Min value  critiacl - M -->
-						</FlexBox>
+                        </FlexBox>
 
-                        	<FlexBox class="sapUiMediumMarginBegin sapUiTinyMarginTop tileLayout" height="70px" width="170px" renderType="Bare">
-							<micro:LineMicroChart threshold="40" size="Responsive"  press="press" leftTopLabel="0M" leftBottomLabel="Q1 Start" rightTopLabel="80M" rightBottomLabel="Q1 End">
-								<micro:lines>
-									<micro:LineMicroChartLine>
-										<micro:points>
-											<micro:LineMicroChartEmphasizedPoint x="0" y="35" color="Error" show="true"/>
-											<micro:LineMicroChartEmphasizedPoint x="8" y="53"/>
-											<micro:LineMicroChartEmphasizedPoint x="20" y="10"/>
-											<micro:LineMicroChartEmphasizedPoint x="30" y="30"/>
-											<micro:LineMicroChartEmphasizedPoint x="40" y="52"/>
-											<micro:LineMicroChartEmphasizedPoint x="100" y="73" color="Good" show="true"/>
-										</micro:points>
-									</micro:LineMicroChartLine>
+                        <FlexBox class="sapUiMediumMarginBegin sapUiTinyMarginTop tileLayout" height="70px" width="170px" renderType="Bare">
+                            <micro:LineMicroChart threshold="40" size="Responsive" press="press" leftTopLabel="0M" leftBottomLabel="Q1 Start" rightTopLabel="80M" rightBottomLabel="Q1 End">
+                                <micro:lines>
+                                    <micro:LineMicroChartLine>
+                                        <micro:points>
+                                            <micro:LineMicroChartEmphasizedPoint x="0" y="35" color="Error" show="true"/>
+                                            <micro:LineMicroChartEmphasizedPoint x="8" y="53"/>
+                                            <micro:LineMicroChartEmphasizedPoint x="20" y="10"/>
+                                            <micro:LineMicroChartEmphasizedPoint x="30" y="30"/>
+                                            <micro:LineMicroChartEmphasizedPoint x="40" y="52"/>
+                                            <micro:LineMicroChartEmphasizedPoint x="100" y="73" color="Good" show="true"/>
+                                        </micro:points>
+                                    </micro:LineMicroChartLine>
 
                                     <!-- use  for short intervals - upto quarter , define min and max range critical - x, y plotting  control max boundaries for x and y axis - maxXValue-->
 
                                     <!-- plotting x,y axis in odata -   use reference https://sapui5.hana.ondemand.com/sdk/test-resources/sap/viz/Charting.html
-                                      if we 6 values  max = 1000 , min = -500 , x= -300    y=1 ,  x=200 y=2 ,-> x represents amount, y- represent position.
+                                                                          if we 6 values  max = 1000 , min = -500 , x= -300    y=1 ,  x=200 y=2 ,-> x represents amount, y- represent position.
+                                                                        
+                                                                         ?? https://ui5.sap.com/1.96.31/#/entity/sap.suite.ui.microchart.LineMicroChart/sample/sap.suite.ui.microchart.sample.LineMicroChartInGridTable/code/SampleData.json -->
+                                </micro:lines>
+                            </micro:LineMicroChart>
+                        </FlexBox>
+
+                        <Text class=" sapUiMediumMarginBegin sapUiTinyMarginTop tileLayout Tile1" text="Critical System - CRM "></Text>
+                        <GenericTile class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" header="Total Amount- KPI" press="onPress" frameType="OneByHalf">
+                            <TileContent unit="Unit">
+                                <NumericContent
+                                scale="USD" value="12000" valueColor="Neutral" indicator="None" withMargin="false"/>
+                            <!-- scale - k,m,b and we will use fragment to load break up of total value -->
+
+                            </TileContent>
+                        </GenericTile>
+                    </HBox>
+
+                </HBox>
+
+                <HBox>
+
+
+                    <!-- <Text text="section 2"></Text> -->
+                    <IconTabBar class="sapUiResponsiveContentPadding">
+                        <items>
+<!--  Tab 1 -->
+                            <IconTabFilter icon="sap-icon://database"  count="7" key="tab1" text="Dashboard">
+                                <items>
+                                    <IconTabFilter icon="sap-icon://error" count="3" text="Application Errors">
+                                        <Text text="Application Error content goes here..."/>
+                                       <!-- update no of app errors count -->
+                                    </IconTabFilter>
+                                    <IconTabFilter icon="sap-icon://alert" count="4" text="System Errors">
+                                        <Text text="System Errors"/>
+										     <!-- update no of app errors count -->
+                                    </IconTabFilter>
                                     
-                                     ?? https://ui5.sap.com/1.96.31/#/entity/sap.suite.ui.microchart.LineMicroChart/sample/sap.suite.ui.microchart.sample.LineMicroChartInGridTable/code/SampleData.json -->
-								</micro:lines>
-							</micro:LineMicroChart>
-						</FlexBox>
+                                </items>
 
-<Text class=" sapUiMediumMarginBegin sapUiTinyMarginTop tileLayout Tile1"  text="Critical System - CRM "> </Text>
-<GenericTile class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" header="Total Amount- KPI" press="onPress" frameType = "OneByHalf">
-		<TileContent unit="Unit">
-			<NumericContent scale="USD" value="12000" valueColor="Neutral" indicator="None" withMargin="false" />
-<!-- scale - k,m,b and we will use fragment to load break up of total value -->
+								<VBox> 
+								<HBox> 
+								<!-- Row 1 -->
+<!-- Tile 1*1 SAP -->
+                            <f:SimpleForm id="IDtile" class="sapUiLargeMarginEnd equalColumns1"
+																	maxContainerCols="1" title="SAP" editable="false"
+																	layout="ResponsiveLayout">
+																	<VBox id="IDcontainer">
 
-		</TileContent>
-	</GenericTile>
-</HBox>
+																		<HBox>
+																			<Text class="sapUiMediumMarginTop sapUiSmallMarginBegin"
+																				text="Queue Depth"></Text>
+																			<NumericContent id="IDNum"
+																				class="sapUiSmallMarginBegin sapUiTinyMarginTop"
+																				value="{oCRMModel>/d/StockQuantity}"
+																				valueColor="Critical"							indicator="None" withMargin="false" state="Loaded"
+																				press="onOpenQueueDialog" />
+																		</HBox>
 
-</HBox>
+																		<List id= "IDlist" class="sapUiTinyMarginBottom" >
 
-<HBox >
+																			<StandardListItem id="IDsys" title="System Errors" 	type="Active" 
+					
+						                                                        press="onOpenSystemDialog"
+																				info="{oCRMModel>/d/DimensionHeight}"
+																				infoState="Error"  />
+
+																			<StandardListItem id="IDapp" title="App Errors" type="Active"
+					
+						                                                        press="onOpenAppDialog"
+																				info="{oCRMModel>/d/DimensionWidth}"
+																				infoState="Error" />
+
+																			<StandardListItem title="No of Threads"
+																				info="{oCRMModel>/d/DimensionDepth}"
+																				infoState="None" />
+																		
+																		</List>
+
+																		<HBox>
+																			<Label class="sapUiTinyMarginBegin" text="Updated at:"></Label>
+																			<Text
+																				text="{
+								                                                    path: 'oCRMModel>/d/LastModified',
+							                                                    formatter: '.Formatter.formatJSONDate'}"></Text>
+                                                                        </HBox>
+																	</VBox>
+																</f:SimpleForm>
+                   
+<!-- Tile 1*2 Concur -->
+
+ <f:SimpleForm id="ctile" class="sapUiLargeMarginEnd sapUiTinyMarginBegin equalColumns1"
+																	maxContainerCols="1" title="Concur" editable="false"
+																	layout="ResponsiveLayout">
+																	<VBox id="concontainer">
+
+																		<HBox>
+																			<Text class="sapUiMediumMarginTop sapUiSmallMarginBegin"
+																				text="Queue Depth"></Text>
+																			<NumericContent id="conqd"
+																				class="sapUiSmallMarginBegin sapUiTinyMarginTop"
+																				value="{oconModel>/d/StockQuantity}"
+																				valueColor="Critical"							indicator="None" withMargin="false" state="Loaded"
+																				press="onOpenQueueDialog" />
+																		</HBox>
+
+																		<List id= "conlist" class="sapUiTinyMarginBottom" >
+
+																			<StandardListItem id="consys" title="System Errors" 	type="Active" 
+					
+						                                                        press="onOpenSystemDialog"
+																				info="{oCONModel>/d/DimensionHeight}"
+																				infoState="Error"  />
+
+																			<StandardListItem id="conapp" title="App Errors" type="Active"
+					
+						                                                        press="onOpenAppDialog"
+																				info="{oCONModel>/d/DimensionWidth}"
+																				infoState="Error" />
+
+																			<StandardListItem title="No of Threads"
+																				info="{oCONModel>/d/DimensionDepth}"
+																				infoState="None" />
+																		
+																		</List>
+
+																		<HBox>
+																			<Label class="sapUiTinyMarginBegin" text="Updated at:"></Label>
+																			<Text
+																				text="{
+								                                                    path: 'oCONModel>/d/LastModified',
+							                                                    formatter: '.Formatter.formatJSONDate'}"></Text>
+                                                                        </HBox>
+																	</VBox>
+																</f:SimpleForm>
+<!-- Tile 1*3 FieldGlass -->
+
+ <f:SimpleForm id="FGtile" class="sapUiLargeMarginEnd sapUiMediumMarginBegin equalColumns1"
+																	maxContainerCols="1" title="FG" editable="false"
+																	layout="ResponsiveLayout">
+																	<VBox id="FGcontainer">
+
+																		<HBox>
+																			<Text class="sapUiMediumMarginTop sapUiSmallMarginBegin"
+																				text="Queue Depth"></Text>
+																			<NumericContent id="FGNum"
+																				class="sapUiSmallMarginBegin sapUiTinyMarginTop"
+																				value="{oCRMModel>/d/StockQuantity}"
+																				valueColor="Critical"							indicator="None" withMargin="false" state="Loaded"
+																				press="onOpenQueueDialog" />
+																		</HBox>
+
+																		<List id= "FGlist" class="sapUiTinyMarginBottom" >
+
+																			<StandardListItem id="FGsys" title="System Errors" 	type="Active" 
+					
+						                                                        press="onOpenSystemDialog"
+																				info="{oCRMModel>/d/DimensionHeight}"
+																				infoState="Error"  />
+
+																			<StandardListItem id="FGapp" title="App Errors" type="Active"
+					
+						                                                        press="onOpenAppDialog"
+																				info="{oCRMModel>/d/DimensionWfgth}"
+																				infoState="Error" />
+
+																			<StandardListItem title="No of Threads"
+																				info="{oCRMModel>/d/DimensionDepth}"
+																				infoState="None" />
+																		
+																		</List>
+
+																		<HBox>
+																			<Label class="sapUiTinyMarginBegin" text="Updated at:"></Label>
+																			<Text
+																				text="{
+								                                                    path: 'oCRMModel>/d/LastModified',
+							                                                    formatter: '.Formatter.formatJSONDate'}"></Text>
+                                                                        </HBox>
+																	</VBox>
+																</f:SimpleForm>
+
+								 </HBox>
+
+								 	<HBox> 
+								<!-- Row 2 -->
+								 </HBox>
+								 	<HBox> 
+								<!-- Row 3 -->
+								 </HBox>
+								
+								</VBox>
+
+    
+
+                    <Text text="section 3"></Text>
 
 
 
-<Text text="section 2"></Text>
+
+                            </IconTabFilter>
+
+<!-- Tab 2 -->
+
+ 							<IconTabFilter icon="sap-icon://business-objects-experience" key="tab1" text="Charts">
+                                <items>
+                                    <IconTabFilter text="MicroCharts">
+                                        <Text text="Application Error content goes here..."/>
+                                       
+                                    </IconTabFilter>
+                                    <IconTabFilter text="Viz Charts">
+                                        <Text text="Bar,line etc"/>
+                                    </IconTabFilter>
+									 <IconTabFilter text="Pie Charts">
+                                        <Text text="Pie,Donut charts"/>
+                                    </IconTabFilter>
+                                    
+                                </items>
+
+                            
+                                <Text text="Select a sub tab to see its content..."/>
+                            </IconTabFilter>
+
+<!-- Tab 3 -->
+
+                            <IconTabFilter icon="sap-icon://chart-table-view" key="tab1" text="Reports">
+                                <items>
+                                    <IconTabFilter text="Responsive Table - M">
+                                        <Text text="Table -M content goes here..."/>
+                                       
+                                    </IconTabFilter>
+                                    <IconTabFilter text="Grid Table - UI Table">
+                                        <Text text="Grid - Excel like table control options"/>
+                                    </IconTabFilter>
+
+									<IconTabFilter text="Tree Table - UI Table">
+                                        <Text text="Tree -  table control options"/>
+                                    </IconTabFilter>
+                                    
+                                </items>
+
+                            
+                                <Text text="Select a sub tab to see its content..."/>
+                            </IconTabFilter>
 
 
-</HBox>
+                        </items>
+
+                    </IconTabBar>
 
 
-<HBox >
+                </HBox>
 
 
-<Text text="section 3"></Text>
-</HBox>
-</VBox>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+               
+            </VBox>
 
 
         </content>
     </Page>
 </mvc:View>
+
