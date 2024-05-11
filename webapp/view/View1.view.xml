@@ -291,7 +291,7 @@
 																		</List>
 
 																		<HBox>
-																			<Label class="sapUiTinyMarginBegin" text="Updated at:"></Label>
+																			<Label class="sapUiTinyMarginBegin" text="last refresh:"></Label>
 																			<Text
 																				text="{
 								                                                    path: 'oFGModel>/d/DeliveryDateEarliest',
@@ -444,13 +444,17 @@
 																			<StandardListItem id="SFsys" title="System Errors" 	type="Active" 
 					
 						                                                        press="onOpenSystemDialog"
-																				info="{oSFModel>/d/OrderedById}"
+																				info="{
+								                                                    path: 'oSFModel>/d/OrderedById',
+							                                                    formatter: '.Formatter.formatInputValue'}"
 																				infoState="Error"  />
 
 																			<StandardListItem id="SFapp" title="App Errors" type="Active"
 					
 						                                                        press="onOpenAppDialog"
-																				info="{oSFModel>/d/SupplierId}"
+																				info=" {
+								                                                    path: 'oSFModel>/d/SupplierId',
+							                                                    formatter: '.Formatter.formatInputValue'}"
 																				infoState="Error" />
 
 																			<StandardListItem title="No of Threads"
@@ -511,7 +515,7 @@
 																		</List>
 
 																		<HBox>
-																			<Label class="sapUiTinyMarginBegin" text="Updated at:"></Label>
+																			<Label class="sapUiTinyMarginBegin" text="last refresh:"></Label>
 																			<Text
 																				text="{
 								                                                    path: 'oAZModel>/d/DeliveryDateEarliest',
