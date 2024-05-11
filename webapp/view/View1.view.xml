@@ -136,7 +136,7 @@
 																		</List>
 
 																		<HBox>
-																			<Label class="sapUiTinyMarginBegin" text="Updated at:"></Label>
+																			<Label class="sapUiTinyMarginBegin" text="last refresh:"></Label>
 																			<Text
 																				text="{
 								                                                    path: 'oSAPModel>/d/DeliveryDateEarliest',
@@ -159,7 +159,7 @@
 																				text="Queue Depth"></Text>
 																			<NumericContent id="ConNum"
 																				class="sapUiSmallMarginBegin sapUiTinyMarginTop"
-																				value="{oCRMModel>/d/StockQuantity}"
+																				value="{oConModel>/d/ItemCount}"
 																				valueColor="Critical"							indicator="None" withMargin="false" state="Loaded"
 																				press="onOpenQueueDialog" />
 																		</HBox>
@@ -169,26 +169,30 @@
 																			<StandardListItem id="Consys" title="System Errors" 	type="Active" 
 					
 						                                                        press="onOpenSystemDialog"
-																				info="{oCRMModel>/d/DimensionHeight}"
+																				info="{
+								                                                    path: 'oConModel>/d/OrderedById',
+							                                                    formatter: '.Formatter.formatInputValue'}"
 																				infoState="Error"  />
 
 																			<StandardListItem id="Conapp" title="App Errors" type="Active"
 					
 						                                                        press="onOpenAppDialog"
-																				info="{oCRMModel>/d/DimensionWidth}"
+																				info="{
+								                                                    path: 'oConModel>/d/SupplierId',
+							                                                    formatter: '.Formatter.formatInputValue'}"
 																				infoState="Error" />
 
 																			<StandardListItem title="No of Threads"
-																				info="{oCRMModel>/d/DimensionDepth}"
+																				info="{oConModel>/d/ItemCount}"
 																				infoState="None" />
 																		
 																		</List>
 
 																		<HBox>
-																			<Label class="sapUiTinyMarginBegin" text="Updated at:"></Label>
+																			<Label class="sapUiTinyMarginBegin" text=" last refresh :"></Label>
 																			<Text
 																				text="{
-								                                                    path: 'oCRMModel>/d/LastModified',
+								                                                    path: 'oConModel>/d/DeliveryDateEarliest',
 							                                                    formatter: '.Formatter.formatJSONDate'}"></Text>
                                                                         </HBox>
 																	</VBox>
@@ -206,7 +210,7 @@
 																				text="Queue Depth"></Text>
 																			<NumericContent id="AribaNum"
 																				class="sapUiSmallMarginBegin sapUiTinyMarginTop"
-																				value="{oCRMModel>/d/StockQuantity}"
+																				value="{oAriModel>/d/ItemCount}"
 																				valueColor="Critical"							indicator="None" withMargin="false" state="Loaded"
 																				press="onOpenQueueDialog" />
 																		</HBox>
@@ -216,26 +220,30 @@
 																			<StandardListItem id="Aribasys" title="System Errors" 	type="Active" 
 					
 						                                                        press="onOpenSystemDialog"
-																				info="{oCRMModel>/d/DimensionHeight}"
+																				info="{
+								                                                    path: 'oAriModel>/d/OrderedById',
+							                                                    formatter: '.Formatter.formatInputValue'}"
 																				infoState="Error"  />
 
 																			<StandardListItem id="Aribaapp" title="App Errors" type="Active"
 					
 						                                                        press="onOpenAppDialog"
-																				info="{oCRMModel>/d/DimensionWidth}"
+																				info=" {
+								                                                    path: 'oAriModel>/d/SupplierId',
+							                                                    formatter: '.Formatter.formatInputValue'}"
 																				infoState="Error" />
 
 																			<StandardListItem title="No of Threads"
-																				info="{oCRMModel>/d/DimensionDepth}"
+																				info="{oAriModel>/d/ItemCount}"
 																				infoState="None" />
 																		
 																		</List>
 
 																		<HBox>
-																			<Label class="sapUiTinyMarginBegin" text="Updated at:"></Label>
+																			<Label class="sapUiTinyMarginBegin" text="last refresh:"></Label>
 																			<Text
 																				text="{
-								                                                    path: 'oCRMModel>/d/LastModified',
+								                                                    path: 'oAriModel>/d/DeliveryDateEarliest',
 							                                                    formatter: '.Formatter.formatJSONDate'}"></Text>
                                                                         </HBox>
 																	</VBox>
@@ -244,7 +252,7 @@
                                                                 <!-- 1*4 -->
 
                                                                  <f:SimpleForm id="FGtile" class="equalColumns1"
-																	maxContainerCols="1" title="SAP" editable="false"
+																	maxContainerCols="1" title="FieldGlass" editable="false"
 																	layout="ResponsiveLayout">
 																	<VBox id="FGcontainer">
 
@@ -253,7 +261,7 @@
 																				text="Queue Depth"></Text>
 																			<NumericContent id="FGNum"
 																				class="sapUiSmallMarginBegin sapUiTinyMarginTop"
-																				value="{oCRMModel>/d/StockQuantity}"
+																				value="{oFGModel>/d/ItemCount}"
 																				valueColor="Critical"							indicator="None" withMargin="false" state="Loaded"
 																				press="onOpenQueueDialog" />
 																		</HBox>
@@ -263,17 +271,21 @@
 																			<StandardListItem id="FGsys" title="System Errors" 	type="Active" 
 					
 						                                                        press="onOpenSystemDialog"
-																				info="{oCRMModel>/d/DimensionHeight}"
+																				info="{
+								                                                    path: 'oFGModel>/d/OrderedById',
+							                                                    formatter: '.Formatter.formatInputValue'} "
 																				infoState="Error"  />
 
 																			<StandardListItem id="FGapp" title="App Errors" type="Active"
 					
 						                                                        press="onOpenAppDialog"
-																				info="{oCRMModel>/d/DimensionWidth}"
+																				info="{
+								                                                    path: 'oFGModel>/d/SupplierId',
+							                                                    formatter: '.Formatter.formatInputValue'}  "
 																				infoState="Error" />
 
 																			<StandardListItem title="No of Threads"
-																				info="{oCRMModel>/d/DimensionDepth}"
+																				info="{oFGModel>/d/ItemCount}"
 																				infoState="None" />
 																		
 																		</List>
@@ -282,7 +294,7 @@
 																			<Label class="sapUiTinyMarginBegin" text="Updated at:"></Label>
 																			<Text
 																				text="{
-								                                                    path: 'oCRMModel>/d/LastModified',
+								                                                    path: 'oFGModel>/d/DeliveryDateEarliest',
 							                                                    formatter: '.Formatter.formatJSONDate'}"></Text>
                                                                         </HBox>
 																	</VBox>
@@ -318,7 +330,7 @@
 																				text="Queue Depth"></Text>
 																			<NumericContent id="ECCNum"
 																				class="sapUiSmallMarginBegin sapUiTinyMarginTop"
-																				value="{oCRMModel>/d/StockQuantity}"
+																				value="{oECCModel>/d/ItemCount}"
 																				valueColor="Critical"							indicator="None" withMargin="false" state="Loaded"
 																				press="onOpenQueueDialog" />
 																		</HBox>
@@ -328,26 +340,30 @@
 																			<StandardListItem id="ECCsys" title="System Errors" 	type="Active" 
 					
 						                                                        press="onOpenSystemDialog"
-																				info="{oCRMModel>/d/DimensionHeight}"
+																				info="{
+								                                                    path: 'oECCModel>/d/OrderedById',
+							                                                    formatter: '.Formatter.formatInputValue'}"
 																				infoState="Error"  />
 
 																			<StandardListItem id="ECCapp" title="App Errors" type="Active"
 					
 						                                                        press="onOpenAppDialog"
-																				info="{oCRMModel>/d/DimensionWidth}"
+																				info=" {
+								                                                    path: 'oECCModel>/d/SupplierId',
+							                                                    formatter: '.Formatter.formatInputValue'}"
 																				infoState="Error" />
 
 																			<StandardListItem title="No of Threads"
-																				info="{oCRMModel>/d/DimensionDepth}"
+																				info="{oECCModel>/d/ItemCount}"
 																				infoState="None" />
 																		
 																		</List>
 
 																		<HBox>
-																			<Label class="sapUiTinyMarginBegin" text="Updated at:"></Label>
+																			<Label class="sapUiTinyMarginBegin" text="last refresh:"></Label>
 																			<Text
 																				text="{
-								                                                    path: 'oCRMModel>/d/LastModified',
+								                                                    path: 'oECCModel>/d/DeliveryDateEarliest',
 							                                                    formatter: '.Formatter.formatJSONDate'}"></Text>
                                                                         </HBox>
 																	</VBox>
@@ -367,7 +383,7 @@
 																				text="Queue Depth"></Text>
 																			<NumericContent id="JavNum"
 																				class="sapUiSmallMarginBegin sapUiTinyMarginTop"
-																				value="{oCRMModel>/d/StockQuantity}"
+																				value="{oJavaModel>/d/ItemCount}"
 																				valueColor="Critical"							indicator="None" withMargin="false" state="Loaded"
 																				press="onOpenQueueDialog" />
 																		</HBox>
@@ -377,26 +393,30 @@
 																			<StandardListItem id="Javsys" title="System Errors" 	type="Active" 
 					
 						                                                        press="onOpenSystemDialog"
-																				info="{oCRMModel>/d/DimensionHeight}"
+																				info=" {
+								                                                    path: 'oJavaModel>/d/OrderedById',
+							                                                    formatter: '.Formatter.formatInputValue'}"
 																				infoState="Error"  />
 
 																			<StandardListItem id="Javapp" title="App Errors" type="Active"
 					
 						                                                        press="onOpenAppDialog"
-																				info="{oCRMModel>/d/DimensionWidth}"
+																				info="{
+								                                                    path: 'oJavaModel>/d/SupplierId',
+							                                                    formatter: '.Formatter.formatInputValue'}"
 																				infoState="Error" />
 
 																			<StandardListItem title="No of Threads"
-																				info="{oCRMModel>/d/DimensionDepth}"
+																				info="{oJavaModel>/d/ItemCount}"
 																				infoState="None" />
 																		
 																		</List>
 
 																		<HBox>
-																			<Label class="sapUiTinyMarginBegin" text="Updated at:"></Label>
+																			<Label class="sapUiTinyMarginBegin" text="last refresh:"></Label>
 																			<Text
 																				text="{
-								                                                    path: 'oCRMModel>/d/LastModified',
+								                                                    path: 'oJavaModel>/d/DeliveryDateEarliest',
 							                                                    formatter: '.Formatter.formatJSONDate'}"></Text>
                                                                         </HBox>
 																	</VBox>
@@ -414,7 +434,7 @@
 																				text="Queue Depth"></Text>
 																			<NumericContent id="SFNum"
 																				class="sapUiSmallMarginBegin sapUiTinyMarginTop"
-																				value="{oCRMModel>/d/StockQuantity}"
+																				value="{oSFModel>/d/ItemCount}"
 																				valueColor="Critical"							indicator="None" withMargin="false" state="Loaded"
 																				press="onOpenQueueDialog" />
 																		</HBox>
@@ -424,26 +444,26 @@
 																			<StandardListItem id="SFsys" title="System Errors" 	type="Active" 
 					
 						                                                        press="onOpenSystemDialog"
-																				info="{oCRMModel>/d/DimensionHeight}"
+																				info="{oSFModel>/d/OrderedById}"
 																				infoState="Error"  />
 
 																			<StandardListItem id="SFapp" title="App Errors" type="Active"
 					
 						                                                        press="onOpenAppDialog"
-																				info="{oCRMModel>/d/DimensionWidth}"
+																				info="{oSFModel>/d/SupplierId}"
 																				infoState="Error" />
 
 																			<StandardListItem title="No of Threads"
-																				info="{oCRMModel>/d/DimensionDepth}"
+																				info="{oSFModel>/d/ItemCount}"
 																				infoState="None" />
 																		
 																		</List>
 
 																		<HBox>
-																			<Label class="sapUiTinyMarginBegin" text="Updated at:"></Label>
+																			<Label class="sapUiTinyMarginBegin" text="last refresh:"></Label>
 																			<Text
 																				text="{
-								                                                    path: 'oCRMModel>/d/LastModified',
+								                                                    path: 'oSFModel>/d/DeliveryDateEarliest',
 							                                                    formatter: '.Formatter.formatJSONDate'}"></Text>
                                                                         </HBox>
 																	</VBox>
@@ -461,7 +481,7 @@
 																				text="Queue Depth"></Text>
 																			<NumericContent id="AzNum"
 																				class="sapUiSmallMarginBegin sapUiTinyMarginTop"
-																				value="{oCRMModel>/d/StockQuantity}"
+																				value="{oAZModel>/d/ItemCount}"
 																				valueColor="Critical"							indicator="None" withMargin="false" state="Loaded"
 																				press="onOpenQueueDialog" />
 																		</HBox>
@@ -471,17 +491,21 @@
 																			<StandardListItem id="Azsys" title="System Errors" 	type="Active" 
 					
 						                                                        press="onOpenSystemDialog"
-																				info="{oCRMModel>/d/DimensionHeight}"
+																				info=" {
+								                                                    path: 'oAZModel>/d/OrderedById',
+							                                                    formatter: '.Formatter.formatInputValue'}"
 																				infoState="Error"  />
 
 																			<StandardListItem id="Azapp" title="App Errors" type="Active"
 					
 						                                                        press="onOpenAppDialog"
-																				info="{oCRMModel>/d/DimensionWidth}"
+																				info=" {
+								                                                    path: 'oAZModel>/d/SupplierId',
+							                                                    formatter: '.Formatter.formatInputValue'}"
 																				infoState="Error" />
 
 																			<StandardListItem title="No of Threads"
-																				info="{oCRMModel>/d/DimensionDepth}"
+																				info="{oAZModel>/d/ItemCount}"
 																				infoState="None" />
 																		
 																		</List>
@@ -490,7 +514,7 @@
 																			<Label class="sapUiTinyMarginBegin" text="Updated at:"></Label>
 																			<Text
 																				text="{
-								                                                    path: 'oCRMModel>/d/LastModified',
+								                                                    path: 'oAZModel>/d/DeliveryDateEarliest',
 							                                                    formatter: '.Formatter.formatJSONDate'}"></Text>
                                                                         </HBox>
 																	</VBox>
