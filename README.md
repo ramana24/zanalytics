@@ -64,6 +64,9 @@ Analytics -
 #### Version 1.0 
 <img width="745" alt="image" src="https://github.com/ramana24/zanalytics/assets/16117165/54837b40-6d60-4b4a-af87-eae7005a7670">
 
+<img width="853" alt="image" src="https://github.com/ramana24/zanalytics/assets/16117165/ace9a952-e75d-4082-8366-1e7d9c15eb63">
+
+
 Open Issues:
 1. Card spacing - css margin,css color.
 2. Full width - shell fullwidth, VBox - 100% width,height.
