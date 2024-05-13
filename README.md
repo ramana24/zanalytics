@@ -69,5 +69,5 @@ Analytics -
 
 Open Issues:
 1. Card spacing - css margin,css color.
-2. Full width - shell fullwidth, VBox - 100% width,height.
+2. Full width - shell fullwidth, VBox - 100% width,height. [Working as expected.]
 3. KPI - comaprsion chart -data binind blank
