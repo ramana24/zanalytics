@@ -1,4 +1,8 @@
-<mvc:View xmlns:core="sap.ui.core" controllerName="ux.zanalytics.controller.View1" xmlns:f="sap.ui.layout.form" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns:micro="sap.suite.ui.microchart" xmlns="sap.m">
+<mvc:View xmlns:core="sap.ui.core" controllerName="ux.zanalytics.controller.View1" xmlns:f="sap.ui.layout.form" 
+xmlns:chart="sap.suite.ui.commons" xmlns:viz="sap.viz.ui5.controls"
+xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds" xmlns:viz.data="sap.viz.ui5.data"   
+
+xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns:micro="sap.suite.ui.microchart" xmlns="sap.m">
     <Page id="page" showHeader="false">
         <content>
 
@@ -18,11 +22,11 @@
 
 
                         <FlexBox class="sapUiMediumMarginBegin sapUiTinyMarginTop tileLayout" height="100px" width="170px" renderType="Bare">
-                            <micro:ComparisonMicroChart scale="M" maxValue="" minValue="" press="press">
+                            <micro:ComparisonMicroChart id="IDKPIComp" scale="K" maxValue="10000" minValue="10" press="press">
                                 <micro:data>
-                                    <micro:ComparisonMicroChartData title="Americas" value="10" color="Good"/>
-                                    <micro:ComparisonMicroChartData title="EMEA" value="50" color="Good"/>
-                                    <micro:ComparisonMicroChartData title="APAC" value="-20" color="Error"/>
+                                    <micro:ComparisonMicroChartData title="Price" value="{CompModel>/d/Price}" color="Good"/>
+                                    <micro:ComparisonMicroChartData title="GrossAmount" value="{CompModel>/d/GrossAmount}" color="Good"/>
+                                    <!-- <micro:ComparisonMicroChartData title="APAC" value="-20" color="Error"/> -->
                                 </micro:data>
                             </micro:ComparisonMicroChart>
 
@@ -30,17 +34,23 @@
                         </FlexBox>
 
                         <FlexBox class="sapUiMediumMarginBegin sapUiTinyMarginTop tileLayout" height="70px" width="170px" renderType="Bare">
-                            <micro:LineMicroChart threshold="40" size="Responsive" press="press" leftTopLabel="0M" leftBottomLabel="Q1 Start" rightTopLabel="80M" rightBottomLabel="Q1 End">
+                            <micro:LineMicroChart id="IDLineChart" threshold="5" size="Responsive" press="press" leftTopLabel="0" leftBottomLabel="Q1 Start" rightTopLabel="10" rightBottomLabel="Q1 End">
                                 <micro:lines>
                                     <micro:LineMicroChartLine>
                                         <micro:points>
-                                            <micro:LineMicroChartEmphasizedPoint x="0" y="35" color="Error" show="true"/>
-                                            <micro:LineMicroChartEmphasizedPoint x="8" y="53"/>
-                                            <micro:LineMicroChartEmphasizedPoint x="20" y="10"/>
-                                            <micro:LineMicroChartEmphasizedPoint x="30" y="30"/>
-                                            <micro:LineMicroChartEmphasizedPoint x="40" y="52"/>
-                                            <micro:LineMicroChartEmphasizedPoint x="100" y="73" color="Good" show="true"/>
-                                        </micro:points>
+                                            <micro:LineMicroChartEmphasizedPoint x="9" y="4" color="Error" show="true"/>
+                                            <micro:LineMicroChartEmphasizedPoint x="2" y="5"/>
+                                            <!-- <micro:LineMicroChartEmphasizedPoint x="{oLineModel>/d/results/2/ItemCount}" y="Ariba"/>
+                                            <micro:LineMicroChartEmphasizedPoint x="{oLineModel>/d/results/3/ItemCount}" y="FG"/>
+                                            <micro:LineMicroChartEmphasizedPoint x="{oLineModel>/d/results/4/ItemCount}" y="ECC"/>
+                                            <micro:LineMicroChartEmphasizedPoint x="{oLineModel>/d/results/5/ItemCount}" y="JAVA" color="Good" show="true"/> -->
+											 <micro:LineMicroChartEmphasizedPoint x="3" y="6" color="Good" show="true"/>
+											  <!-- <micro:LineMicroChartEmphasizedPoint x="{oLineModel>/d/results/7/ItemCount}" y="Azure" color="Good" show="true"/>
+                                       
+									   -->
+
+									   <!-- x = no of system errors, y = period, Week1 , Week2 ; threshold =5 ,  w1= 4, w2=8, -->
+									    </micro:points> 
                                     </micro:LineMicroChartLine>
 
                                     <!-- use  for short intervals - upto quarter , define min and max range critical - x, y plotting  control max boundaries for x and y axis - maxXValue-->
@@ -560,14 +570,168 @@
                             <IconTabFilter icon="sap-icon://business-objects-experience" key="tab1" text="Charts">
                                 <items>
                                     <IconTabFilter text="MicroCharts">
-                                        <Text text="Application Error content goes here..."/>
+                                        <Text text=""/>
 
                                     </IconTabFilter>
                                     <IconTabFilter text="Viz Charts">
-                                        <Text text="Bar,line etc"/>
+                                        <!-- <Text text="Bar,line etc"/> -->
+
+
+
+	<chart:ChartContainer
+				id="chartContainer"
+				showFullScreen="true"
+				autoAdjustHeight="true"
+				showZoom="true"
+				showPersonalization="false"
+				
+				personalizationPress="attachPersonalizationPress"
+				contentChange="attachContentChange"
+				title="Bar Chart">
+				<chart:content>
+					<chart:ChartContainerContent>
+						<chart:content>
+						
+
+
+
+  <viz:VizFrame id="idVizFrameBar" legendVisible="true" uiConfig="{applicationSet:'fiori'}"
+              width = "2400px"
+                                                            height = "600px" vizProperties="{ title: {text : 'Bar Chart', visible : false}}" vizType='line'>
+													
+										<viz:dataset>
+											<viz.data:FlattenedDataset id="flattenData" data="{IceCreamModel>/Items}">
+												<viz.data:dimensions>
+												<viz.data:DimensionDefinition name="Flavor" value="{IceCreamModel>Flavor}" />
+												</viz.data:dimensions>
+											<viz.data:measures>
+													<viz.data:MeasureDefinition name="Sales" value="{IceCreamModel>Sales}" />
+											</viz.data:measures>
+											</viz.data:FlattenedDataset>
+											</viz:dataset>
+												
+											<viz:feeds>
+												<viz.feeds:FeedItem uid="valueAxis" type="Measure" values="Sales" />
+											<viz.feeds:FeedItem uid="categoryAxis" type="Dimension" values="Flavor" />
+											</viz:feeds>
+
+
+
+
+
+            </viz:VizFrame>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+						</chart:content>
+					</chart:ChartContainerContent>
+				</chart:content>
+			</chart:ChartContainer>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+										
                                     </IconTabFilter>
                                     <IconTabFilter text="Pie Charts">
                                         <Text text="Pie,Donut charts"/>
+
+
+
+										
+	<chart:ChartContainer
+				id="chartContainer2"
+				showFullScreen="true"
+				autoAdjustHeight="true"
+				showZoom="true"
+				showPersonalization="false"
+				
+				personalizationPress="attachPersonalizationPress"
+				contentChange="attachContentChange"
+				title="Bar Chart">
+				<chart:content>
+					<chart:ChartContainerContent>
+						<chart:content>
+						
+
+
+
+  <viz:VizFrame id="idVizFramePie" legendVisible="true" uiConfig="{applicationSet:'fiori'}"
+              width = "2400px"
+                                                            height = "600px" vizProperties="{ title: {text : 'Bar Chart', visible : false}}" vizType='donut'>
+													
+										<viz:dataset>
+											<viz.data:FlattenedDataset id="flattenData2" data="{IceCreamModel>/Items}">
+												<viz.data:dimensions>
+												<viz.data:DimensionDefinition name="Flavor" value="{IceCreamModel>Flavor}" />
+												</viz.data:dimensions>
+											<viz.data:measures>
+													<viz.data:MeasureDefinition name="Sales" value="{IceCreamModel>Sales}" />
+											</viz.data:measures>
+											</viz.data:FlattenedDataset>
+											</viz:dataset>
+												
+											<viz:feeds>
+												<viz.feeds:FeedItem uid="size" type="Measure" values="Sales" />
+											<viz.feeds:FeedItem uid="color" type="Dimension" values="Flavor" />
+											</viz:feeds>
+
+
+
+
+
+            </viz:VizFrame>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+						</chart:content>
+					</chart:ChartContainerContent>
+				</chart:content>
+			</chart:ChartContainer>
                                     </IconTabFilter>
 
                                 </items>
