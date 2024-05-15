@@ -743,6 +743,76 @@ xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns:micro="sap.suite.ui.microc
                             <!-- Tab 3 -->
 
                             <IconTabFilter icon="sap-icon://chart-table-view" key="tab1" text="Reports">
+
+							<Table id="IDOrderTable" class="sapUiSizeCozy"
+		inset="false"
+		mode="Delete"
+				alternateRowColors="true"
+		items="{
+			path: '/PurchaseOrders',
+		
+			
+			sorter: { path: 'POId', descending: true, group: '.getCounty'}
+			
+		}">
+		<headerToolbar>
+			<OverflowToolbar>
+				<content>
+					<Title text="Orders" level="H2"/>
+					<ToolbarSpacer />
+					<Button text="Create" press="onCreate"></Button> 
+					<Button text="Update"></Button>
+					<Button text="Delete"></Button>
+				</content>
+			</OverflowToolbar>
+		</headerToolbar>
+		
+		<columns>
+			<Column
+				width="12em">
+				<Text text="Purchase Order ID" />
+			</Column>
+
+			<Column
+				width="auto" mergeDuplicates="true">
+				<Text text="{i18n>TblOrderedById}" />
+			</Column>
+
+			<Column
+				width="auto">
+				<Text text="{i18n>TblChangedAt}" />
+			</Column>
+			<Column
+				width="auto">
+				<Text text="{i18n>TblLaterDelivDateExist}" />
+			</Column>
+		</columns>
+		<items>
+			<ColumnListItem vAlign="Middle">
+				<cells>
+					<ObjectIdentifier
+						title="{POId}"
+						text=""/>
+						<Text text="{OrderedById}"></Text>
+							<Text text="{
+								                                                    path: 'ChangedAt',
+							                                                    formatter: '.Formatter.formatJSONDateTime'}"></Text>
+				
+
+						<ObjectStatus
+							class="sapUiSmallMarginBottom"
+							text="{
+								                                                    path: 'LaterDelivDateExist',
+							                                                    formatter: '.Formatter.DeliveryStatus'}"
+							inverted="true"
+							icon="sap-icon://BusinessSuiteInAppSymbols/icon-return-delivery"
+							state="{
+								                                                    path: 'LaterDelivDateExist',
+							                                                    formatter: '.Formatter.DeliveryStatusState'}" />
+				</cells>
+			</ColumnListItem>
+		</items>
+	</Table>
                                 <items>
                                     <IconTabFilter text="Responsive Table - M">
                                         <Text text="Table -M content goes here..."/>
