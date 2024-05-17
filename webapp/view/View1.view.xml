@@ -125,7 +125,7 @@ xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns:micro="sap.suite.ui.microc
 
 																			<StandardListItem id="IDsys" title="System Errors" 	type="Active" 
 					
-						                                                        press="onOpenSystemDialog"
+						                                                        press="onOpenSysErrorDialog"
 																				info="{
 								                                                    path: 'oSAPModel>/d/OrderedById',
 							                                                    formatter: '.Formatter.formatInputValue'}"
@@ -569,9 +569,82 @@ xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns:micro="sap.suite.ui.microc
 
                             <IconTabFilter icon="sap-icon://business-objects-experience" key="tab1" text="Charts">
                                 <items>
+
+
+								
+
+
+
+
+
+
+
+
+
                                     <IconTabFilter text="MicroCharts">
                                         <Text text=""/>
 
+	<chart:ChartContainer
+				id="chartContainerOrder"
+				showFullScreen="true"
+				autoAdjustHeight="true"
+				showZoom="true"
+				showPersonalization="false"
+				
+				personalizationPress="attachPersonalizationPress"
+				contentChange="attachContentChange"
+				title="Bar Chart">
+				<chart:content>
+					<chart:ChartContainerContent>
+						<chart:content>
+						
+
+
+
+  <viz:VizFrame id="idVizFrameOrder" legendVisible="true" uiConfig="{applicationSet:'fiori'}"
+              width = "2400px"
+                                                            height = "600px" vizProperties="{ title: {text : 'Bar Chart', visible : false}}" vizType='line'>
+													
+										<viz:dataset>
+											<viz.data:FlattenedDataset id="flattenDataOrder" data="{IceCreamModel>/Items}">
+												<viz.data:dimensions>
+												<viz.data:DimensionDefinition name="Flavor" value="{IceCreamModel>Flavor}" />
+												</viz.data:dimensions>
+											<viz.data:measures>
+													<viz.data:MeasureDefinition name="Sales" value="{IceCreamModel>Sales}" />
+											</viz.data:measures>
+											</viz.data:FlattenedDataset>
+											</viz:dataset>
+												
+											<viz:feeds>
+												<viz.feeds:FeedItem uid="valueAxis" type="Measure" values="Sales" />
+											<viz.feeds:FeedItem uid="categoryAxis" type="Dimension" values="Flavor" />
+											</viz:feeds>
+
+
+
+
+
+            </viz:VizFrame>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+						</chart:content>
+					</chart:ChartContainerContent>
+				</chart:content>
+			</chart:ChartContainer>
                                     </IconTabFilter>
                                     <IconTabFilter text="Viz Charts">
                                         <!-- <Text text="Bar,line etc"/> -->
@@ -760,7 +833,7 @@ xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns:micro="sap.suite.ui.microc
 				<content>
 					<Title text="Orders" level="H2"/>
 					<ToolbarSpacer />
-					<Button text="Create" press="onCreate"></Button> 
+					<Button text="Create" press="onOpenDialog"></Button> 
 					<Button text="Update"></Button>
 					<Button text="Delete"></Button>
 				</content>

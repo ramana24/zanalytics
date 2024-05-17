@@ -26,6 +26,8 @@ sap.ui.define([
             
                   this.getView().byId("IDcontainer").setModel(oSAPModel,"oSAPModel");
 
+               
+
 
                    // card 2 model
                    var oConModel =  new sap.ui.model.json.JSONModel("/sap/opu/odata/sap/EPM_REF_APPS_PO_APV_SRV/PurchaseOrders('300001998')?$format=json");
@@ -245,6 +247,48 @@ this.getView().byId("chartContainer2").setModel(oIceCreamModel, "IceCreamModel")
 
 
 
+            },
+
+// Fragments controller logic - 1.20 
+
+            async onOpenDialog() {
+                // create dialog lazily
+                this.oDialog ??= await this.loadFragment({
+                    name: "ux.zanalytics.view.create"
+                });
+            
+                this.oDialog.open();
+            },
+
+            // Fragments controller logic - 1.96 below.
+            onOpenDialog1 : function () {
+
+                // create dialog lazily
+                if (!this.pDialog) {
+                    this.pDialog = this.loadFragment({
+                        name: "ux.zanalytics.view.create"
+                    });
+                } 
+                this.pDialog.then(function(oDialog) {
+                    oDialog.open();
+                });
+            },
+
+            async onOpenSysErrorDialog() {
+                // create dialog lazily
+                this.oDialog ??= await this.loadFragment({
+                    name: "ux.zanalytics.view.SysError"
+                });
+            
+                this.oDialog.open();
+                var oSysModel =  new sap.ui.model.json.JSONModel("/sap/opu/odata/sap/EPM_REF_APPS_PO_APV_SRV/PurchaseOrders('300001998')?$expand=Supplier&$format=json");
+                this.getView().byId("tblsysTable").setModel(oSysModel,"oSysModel");
+            },
+            onCloseAppDialog:function(){
+this.getView().byId("SysDialog").close();
+
             }
+
+
         });
     });
