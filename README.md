@@ -71,7 +71,7 @@ Open Issues:
 1. Card spacing - css margin,css color.
 2. Full width - shell fullwidth, VBox - 100% width,height. [Working as expected.]
 3. KPI - comaprsion chart -data binind blank
-4. Ui table - single record - repeating multiple times.
+4. Ui table - single record - repeating multiple times. For PurchaseOrderItems , if it has multiple records - syntax might not work from xml alone.
    Solution:
 
 <t:Table id="tblsysTable" rows="{/PurchaseOrders?$expand=Supplier,PurchaseOrderItems}" class="sapUiSizeCompact" selectionMode="None">
