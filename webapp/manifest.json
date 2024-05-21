@@ -20,6 +20,7 @@
         "uri": "/sap/opu/odata/sap/EPM_REF_APPS_PO_APV_SRV/",
         "type": "OData",
         "settings": {
+          "usePreliminaryContext" :"false", 
           "annotations": [],
           "localUri": "localService/metadata.xml",
           "odataVersion": "2.0"

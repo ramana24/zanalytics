@@ -3,6 +3,13 @@ sap.ui.define(function() {
 
 	var Formatter = {
 
+		toInteger :function(oValue){
+var oValueInt = oValue;
+
+return parseInt(oValueInt);
+
+		},
+
 		weightState :  function (fMeasure, sUnit) {
 
 			// Boarder values for different status of weight

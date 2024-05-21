@@ -833,9 +833,23 @@ xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns:micro="sap.suite.ui.microc
 				<content>
 					<Title text="Orders" level="H2"/>
 					<ToolbarSpacer />
+
 					<Button text="Create" press="onOpenDialog"></Button> 
 					<Button text="Update"></Button>
 					<Button text="Delete"></Button>
+					<ToolbarSpacer/>
+					<Button
+						tooltip="Sort"
+						icon="sap-icon://sort"
+						press="handleSortButtonPressed"/>
+					<Button
+						tooltip="Filter"
+						icon="sap-icon://filter"
+						press="handleFilterButtonPressed"/>
+					<Button
+						tooltip="Group"
+						icon="sap-icon://group-2"
+						press="handleGroupButtonPressed"/>
 				</content>
 			</OverflowToolbar>
 		</headerToolbar>
@@ -863,9 +877,11 @@ xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns:micro="sap.suite.ui.microc
 		<items>
 			<ColumnListItem vAlign="Middle">
 				<cells>
-					<ObjectIdentifier
+					<!-- <ObjectIdentifier
 						title="{POId}"
-						text=""/>
+						text=""/> -->
+
+						<Input maxLength="{path : '/#PurchaseOrder/POId/@maxLength' ,formatter: '.Formatter.toInteger'}" value="{POId}"> </Input>
 						<Text text="{OrderedById}"></Text>
 							<Text text="{
 								                                                    path: 'ChangedAt',

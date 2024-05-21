@@ -2,12 +2,15 @@ sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "ux/zanalytics/util/Formatter",
     "sap/ui/model/json/JSONModel",
+    "sap/ui/core/Fragment",
+    "sap/ui/model/Filter",
+    "sap/ui/model/Sorter",
     
 ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-    function (Controller,Formatter,JSONModel) {
+    function (Controller,Formatter,JSONModel,Fragment,Filter,Sorter) {
         "use strict";
 
         return Controller.extend("ux.zanalytics.controller.View1", {
@@ -20,6 +23,7 @@ sap.ui.define([
             
                   this.getView().setModel(oModel);
                   
+                  this._mViewSettingsDialogs = {};
     
             // card 1 model
                   var oSAPModel =  new sap.ui.model.json.JSONModel("/sap/opu/odata/sap/EPM_REF_APPS_PO_APV_SRV/PurchaseOrders('300001997')?$format=json");
@@ -287,8 +291,115 @@ this.getView().byId("chartContainer2").setModel(oIceCreamModel, "IceCreamModel")
             onCloseAppDialog:function(){
 this.getView().byId("SysDialog").close();
 
-            }
+            },
+// SORT
+            handleSortButtonPressed: function () {
+                this.getViewSettingsDialog("ux.zanalytics.view.Sort")
+                    .then(function (oViewSettingsDialog) {
+                        oViewSettingsDialog.open();
+                    });
+            },
 
+            handleSortDialogConfirm: function (oEvent) {
+                var oTable = this.byId("IDOrderTable"),
+                    mParams = oEvent.getParameters(),
+                    oBinding = oTable.getBinding("items"),
+                    sPath,
+                    bDescending,
+                    aSorters = [];
+    
+                sPath = mParams.sortItem.getKey();
+                bDescending = mParams.sortDescending;
+                aSorters.push(new Sorter(sPath, bDescending)); // sort login in ui
+    
+                // apply the selected sort and group settings
+                oBinding.sort(aSorters);
+            },
+
+            // Filter
+            handleFilterButtonPressed: function () {
+                this.getViewSettingsDialog("ux.zanalytics.view.Filter")
+                    .then(function (oViewSettingsDialog) {
+                        oViewSettingsDialog.open();
+                    });
+            },
+            handleFilterDialogConfirm: function (oEvent) {
+                var oTable = this.byId("IDOrderTable"),
+                    mParams = oEvent.getParameters(),
+                    oBinding = oTable.getBinding("items"),
+                    aFilters = [];
+    
+                mParams.filterItems.forEach(function(oItem) {
+                    var aSplit = oItem.getKey().split("___"),
+                        sPath = aSplit[0],
+                        sOperator = aSplit[1],
+                        sValue1 = aSplit[2],
+                        sValue2 = aSplit[3],
+                        oFilter = new Filter(sPath, sOperator, sValue1, sValue2); // logic for fitler
+                    aFilters.push(oFilter);
+                });
+    
+                // apply filter settings
+                oBinding.filter(aFilters);
+    
+                // update filter bar
+             //   this.byId("vsdFilterBar").setVisible(aFilters.length > 0);
+              //  this.byId("vsdFilterLabel").setText(mParams.filterString);
+            },
+    
+            // Grouping
+
+            handleGroupButtonPressed: function () {
+                this.getViewSettingsDialog("ux.zanalytics.view.GroupBy")
+                    .then(function (oViewSettingsDialog) {
+                        oViewSettingsDialog.open();
+                    });
+            },
+            handleGroupDialogConfirm: function (oEvent) {
+                var oTable = this.byId("IDOrderTable"),
+                    mParams = oEvent.getParameters(),
+                    oBinding = oTable.getBinding("items"),
+                    sPath,
+                    bDescending,
+                    vGroup,
+                    aGroups = [];
+    
+                if (mParams.groupItem) {
+                    sPath = mParams.groupItem.getKey();
+                    bDescending = mParams.groupDescending;
+                    vGroup = this.mGroupFunctions[sPath];
+                    aGroups.push(new Sorter(sPath, bDescending, vGroup)); // group logic - 3rd parameter
+                    // apply the selected group settings
+                    oBinding.sort(aGroups);
+                } else if (this.groupReset) {
+                    oBinding.sort();
+                    this.groupReset = false;
+                }
+            },
+
+            //reset group
+            resetGroupDialog: function(oEvent) {
+                this.groupReset =  true;
+            },
+
+            getViewSettingsDialog: function (sDialogFragmentName) {
+                var pDialog = this._mViewSettingsDialogs[sDialogFragmentName];
+    
+                if (!pDialog) {
+                    pDialog = Fragment.load({
+                        id: this.getView().getId(),
+                        name: sDialogFragmentName,
+                        controller: this
+                    }).then(function (oDialog) {
+                        // if (Device.system.desktop) {
+                        //     oDialog.addStyleClass("sapUiSizeCompact");
+                        // }
+                        return oDialog;
+                    });
+                    this._mViewSettingsDialogs[sDialogFragmentName] = pDialog;
+                }
+                return pDialog;
+            },
 
         });
     });

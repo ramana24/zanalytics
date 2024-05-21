@@ -7,10 +7,33 @@
 		<ScrollContainer height="100%" width="100%"
 			horizontal="true" vertical="false">
 			
-            
+            <!-- // V2 Odata - For UI table expand 1 level biding syntax -->
         
+				<t:Table id="tblsysTable" rows="{/PurchaseOrders?$expand=Supplier}" class="sapUiSizeCompact" selectionMode="None">
 
 
+					<t:columns>
+						<t:Column width="4rem" sortProperty="Supplier/Id" filterProperty="Supplier/Id" tooltip="PO ID ">
+							<Label text="PO ID" />
+							<t:template>
+								<Text text="{Supplier/Id}" />
+							</t:template>
+						</t:Column>
+
+						<t:Column width="4rem" sortProperty="POId" filterProperty="POId" filterOperator="EQ" tooltip="PO item ID ">
+							<Label text="PO ID" />
+							<t:template>
+								<Text text="{POId}" />
+							</t:template>
+						</t:Column>
+
+
+						
+					</t:columns>
+				</t:Table>
+
+
+<!-- 
 				<t:Table id="tblsysTable" class="sapUiSizeCompact" selectionMode="None"
 					rows="{oSysModel>/d/Supplier}" >
 
@@ -26,8 +49,7 @@
 
 						
 					</t:columns>
-				</t:Table>
-
+				</t:Table> -->
 	
 		</ScrollContainer>
 		<beginButton>
