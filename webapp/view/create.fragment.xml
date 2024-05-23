@@ -5,7 +5,7 @@
 	
    xmlns:core="sap.ui.core">
 <Dialog id="CreateDialog" class="sapUiSizeCozy" resizable="true" draggable="true" title="{i18n>TitCreate}" contentHeight="600px"
-		contentWidth="400px">
+		contentWidth="800px">
 		<!-- <ScrollContainer height="60%" width="40%"
 			horizontal="true" vertical="false"> -->
 			<VBox class="sapUiSmallMargin">
@@ -28,22 +28,22 @@
 			singleContainerFullSize="false" >
 			<f:content>
 				<Label text="Purchase OrderId" />
-				<Input id="name" value="{oCreateModel>/d/POId}" />
-				<Label text="Street/No." />
-				<Input value="{Street}">
+				<Input id="idPOID" value="{oCreateModel>/d/POId}" />
+				<Label text="GrossAmount" />
+				<Input id="idGAmt" value="{oCreateModel>/d/GrossAmount}">
 				</Input>
-				<Input value="{HouseNumber}">
+				<Input editable="false" value="{oCreateModel>/d/CurrencyCode}">
 					<layoutData>
 						<l:GridData span="XL1 L2 M2 S4" />
 					</layoutData>
 				</Input>
-				<Label text="ZIP Code/City" />
-				<Input value="{ZIPCode}">
+				<Label text="SupplierName" />
+				<Input id="idSupplier" value="{oCreateModel>/d/SupplierName}">
 					<layoutData>
 						<l:GridData span="XL1 L2 M2 S4" />
 					</layoutData>
 				</Input>
-				<Input value="{City}" />
+				<!-- <Input value="{City}" />
 				<Label text="Country" />
 				<Select id="country" selectedKey="{Country}">
 					<items>
@@ -51,7 +51,7 @@
 						<core:Item text="Germany" key="Germany"/>
 						<core:Item text="USA" key="USA"/>
 					</items>
-				</Select>
+				</Select> -->
 			</f:content>
 		</f:SimpleForm>
 	</VBox>

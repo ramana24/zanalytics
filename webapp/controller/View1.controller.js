@@ -5,12 +5,14 @@ sap.ui.define([
     "sap/ui/core/Fragment",
     "sap/ui/model/Filter",
     "sap/ui/model/Sorter",
+    "sap/m/MessageToast",
+    "sap/m/MessageBox"
 
 ],
 /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-    function (Controller, Formatter, JSONModel, Fragment, Filter, Sorter) {
+    function (Controller, Formatter, JSONModel, Fragment, Filter, Sorter,MessageToast,MessageBox) {
     //"use strict";
 
     return Controller.extend("ux.zanalytics.controller.View1", {
@@ -224,26 +226,64 @@ sap.ui.define([
 
         },
 
-        // Fragments controller logic - 1.20
+        // Fragments controller logic - 1.20 (failed to load )
         // Create function
-        async onOpenCreateDialog(oEvent) { // create dialog lazily
-            this.oDialogCreate ?? = await this.loadFragment({name: "ux.zanalytics.view.create"});
+        // async onOpenCreateDialog(oEvent) { // create dialog lazily
+        //     this.oDialogCreate ?? = await this.loadFragment({name: "ux.zanalytics.view.create"});
 
-            this.oDialogCreate.open();
-
-
-            var oTable = this.getView().byId("IDOrderTable");
-
-            var oCreateDialog = this.getView().byId("CreateDialog");
-
-            var oPOID = "300001998";
-
-            var oCreateModel = new sap.ui.model.json.JSONModel("/sap/opu/odata/sap/EPM_REF_APPS_PO_APV_SRV/PurchaseOrders('" + oPOID + "')?$format=json");
-
-            this.getView().byId("IdCreateForm").setModel(oCreateModel, "oCreateModel");
+        //     this.oDialogCreate.open();
 
 
-        },
+        //     var oTable = this.getView().byId("IDOrderTable");
+
+        //     var oCreateDialog = this.getView().byId("CreateDialog");
+
+        //     var oPOID = "300001998";
+
+        //     var oCreateModel = new sap.ui.model.json.JSONModel("/sap/opu/odata/sap/EPM_REF_APPS_PO_APV_SRV/PurchaseOrders('" + oPOID + "')?$format=json");
+
+        //     this.getView().byId("IdCreateForm").setModel(oCreateModel, "oCreateModel");
+
+
+        // },
+
+        // New syntax - 1.93 above
+
+        // this === Controller instance
+        onOpenCreateDialog: async function() {
+    const dialogcreate = this.byId("CreateDialog") || await this.loadFragment({
+      name: "ux.zanalytics.view.create"
+    });
+   
+   
+    var oTable = this.getView().byId("IDOrderTable");
+
+   
+    var length = oTable.getSelectedItems().length;
+
+    if(length>0)
+{ 
+    dialogcreate.open();
+
+
+     // Loading selected row data in create fragment
+
+    //  var oTable = this.getView().byId("IDOrderTable");
+
+     var oCreateDialog = this.getView().byId("CreateDialog");
+
+         var oPOID = oTable.getSelectedContextPaths()[0].split('(')[1].substr(1,9);
+
+         var oCreateModel = new sap.ui.model.json.JSONModel("/sap/opu/odata/sap/EPM_REF_APPS_PO_APV_SRV/PurchaseOrders('" + oPOID + "')?$format=json");
+
+         this.getView().byId("IdCreateForm").setModel(oCreateModel, "oCreateModel");
+
+        } else {
+
+            MessageToast.show("Please select a row");
+        }
+
+  },
         onCloseCreateDialog: function () {
             this.getView().byId("CreateDialog").close();
 
@@ -252,24 +292,30 @@ sap.ui.define([
         // logic create operation
 
         onPOCreate: function (oEvent) {
+
+            try {
             var oTable = this.getView().byId("IDOrderTable");
 
             var oCreateDialog = this.getView().byId("CreateDialog");
 
             var oModel = this.getView().getModel();
 
-            var oPOID = "300001998";
+            
 
-            // JSON Payload structure
+            var oPOID = this.getView().byId("idPOID").getValue();
+            var oGAmt = this.getView().byId("idGAmt").getValue();
+            var oSupplier =this.getView().byId("idSupplier").getValue();
+
+            // JSON Payload structure - test in gw client
 
             var oCreatePayload = {
 
                 "POId": oPOID,
-                "OrderedById": "400000003",
+                "OrderedById": oGAmt,
                 "OrderedByName": "Walter  Winter",
                 "ChangedAt": "/Date(1716328800000)/",
                 "SupplierId": "100000088",
-                "SupplierName": "Siwusha",
+                "SupplierName": oSupplier,
                 "DeliveryAddress": "Zeppelinstrasse 2, 85399 Munich, DE Germany",
                 "DeliveryDateEarliest": "/Date(1716933600000)/",
                 "LaterDelivDateExist": "X",
@@ -278,43 +324,52 @@ sap.ui.define([
                 "ItemCount": 4
             };
 
-            var oData = {
-                ProductI: 999,
-                ProductName: "myProductUpdated"
-            }
+            // var oData = {
+            //     ProductI: 999,
+            //     ProductName: "myProductUpdated"
+            // }
             oModel.create("/PurchaseOrders", oCreatePayload, {
                 success: function () {
 
 
-                    console.log("success");
-
+                    MessageToast.show("PO Created Successfully" + oPOID );
+                 
 
                 },
-                error: function () {
+                error: function (oError) {
 
 
-                    console.log("error");
-
+                    console.log(oError);
+                    MessageToast.show("Po Creation failed.");
                 }
             });
+        }
+        catch{
+            MessageBox.error("Unable to Process Request . Kindly reach out to IT Support. ");
+        }
 
         },
 
 
         // update function
-        async onOpenUpdateDialog() { 
-            // create dialog lazily
-            this.oDialogUpdate ?? = await this.loadFragment({name: "ux.zanalytics.view.update"});
+        // async onOpenUpdateDialog() { 
+        //     // create dialog lazily
+        //     this.oDialogUpdate ?? = await this.loadFragment({name: "ux.zanalytics.view.update"});
 
-            this.oDialogUpdate.open();
-        },
+        //     this.oDialogUpdate.open();
+        // },
 
-
+        onOpenUpdateDialog: async function() {
+            const dialogupdate = this.byId("UpdateDialog") || await this.loadFragment({
+              name: "ux.zanalytics.view.update"
+            });
+            dialogupdate.open();
+          },
         onCloseUpdateDialog: function () {
             this.getView().byId("UpdateDialog").close();
 
         },
-        // Fragments controller logic - 1.96 below.
+        // Fragments controller logic -1.58 above ,  1.96 below.
         onOpenDialog1: function () { // create dialog lazily
             if (!this.pDialog) {
                 this.pDialog = this.loadFragment({name: "ux.zanalytics.view.create"});
@@ -324,13 +379,21 @@ sap.ui.define([
             });
         },
 
-        async onOpenSysErrorDialog() { // create dialog lazily
-            this.oDialog ?? = await this.loadFragment({name: "ux.zanalytics.view.SysError"});
+        // async onOpenSysErrorDialog() { // create dialog lazily
+        //     this.oDialog ?? = await this.loadFragment({name: "ux.zanalytics.view.SysError"});
 
-            this.oDialog.open();
-            var oSysModel = new sap.ui.model.json.JSONModel("/sap/opu/odata/sap/EPM_REF_APPS_PO_APV_SRV/PurchaseOrders('300001998')?$expand=Supplier&$format=json");
-            this.getView().byId("tblsysTable").setModel(oSysModel, "oSysModel");
-        },
+        //     this.oDialog.open();
+        //     var oSysModel = new sap.ui.model.json.JSONModel("/sap/opu/odata/sap/EPM_REF_APPS_PO_APV_SRV/PurchaseOrders('300001998')?$expand=Supplier&$format=json");
+        //     this.getView().byId("tblsysTable").setModel(oSysModel, "oSysModel");
+        // },
+
+        onOpenSysErrorDialog: async function() {
+            const dialogsysError = this.byId("SysDialog") || await this.loadFragment({
+              name: "ux.zanalytics.view.SysError"
+            });
+            dialogsysError.open();
+          },
+
         onCloseAppDialog: function () {
             this.getView().byId("SysDialog").close();
 
