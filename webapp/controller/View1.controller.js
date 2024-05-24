@@ -6,13 +6,15 @@ sap.ui.define([
     "sap/ui/model/Filter",
     "sap/ui/model/Sorter",
     "sap/m/MessageToast",
-    "sap/m/MessageBox"
+    "sap/m/MessageBox",
+    "sap/viz/ui5/format/ChartFormatter",
+    "sap/viz/ui5/api/env/Format"
 
 ],
 /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-    function (Controller, Formatter, JSONModel, Fragment, Filter, Sorter,MessageToast,MessageBox) {
+    function (Controller, Formatter, JSONModel, Fragment, Filter, Sorter,MessageToast,MessageBox,ChartFormatter,Format) {
     //"use strict";
 
     return Controller.extend("ux.zanalytics.controller.View1", {
@@ -142,7 +144,13 @@ sap.ui.define([
             var oIceCreamModel = new sap.ui.model.json.JSONModel();
             oIceCreamModel.setData(aData);
             this.getView().byId("chartContainer2").setModel(oIceCreamModel, "IceCreamModel");
+            var oPopOver = this.getView().byId("idPopOver");
+            oPopOver.connect(oVizFrame.getVizUid());
+         //   oPopOver.setFormatString(ChartFormatter.DefaultPattern.STANDARDFLOAT);
 
+            // var oChart = this.getView().byId("idVizFramePie");
+            // var vizPopover = new sap.viz.ui5.controls.Popover({});
+            // oChart.connect(vizFrame.getVizUid());
 
             // // Refernce.
 
