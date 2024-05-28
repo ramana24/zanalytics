@@ -16,7 +16,8 @@ sap.ui.define([
      */
     function (Controller, Formatter, JSONModel, Fragment, Filter, Sorter, MessageToast, MessageBox, ChartFormatter, Format) { // "use strict";
 
-    return Controller.extend("ux.zanalytics.controller.View1", {Formatter: Formatter,// loading outside formatter into our file
+    return Controller.extend("ux.zanalytics.controller.View1", {
+        Formatter: Formatter,// loading outside formatter into our file
             onInit: function () {
                 var that = this;
                 var sServiceUrl = "/sap/opu/odata/sap/EPM_REF_APPS_PO_APV_SRV/";
@@ -144,12 +145,22 @@ sap.ui.define([
                 this.getView().byId("chartContainer2").setModel(oIceCreamModel, "IceCreamModel");
                 var oPopOver = this.getView().byId("idPopOver");
                 oPopOver.connect(oVizFrame.getVizUid());
+
+            },
+            // end of init function.
               
             // New syntax - 1.93 above
 
             // this === Controller instance
-            onOpenCreateDialog: async function () {
-                const dialogcreate = this.byId("CreateDialog") || await this.loadFragment({name: "ux.zanalytics.view.create"});
+            onOpenCreateDialog:function() {
+             //   const dialogcreate = this.byId("CreateDialog") || await this.loadFragment({name: "ux.zanalytics.view.create"});
+             var that = this;
+
+             if (!this.pDialogCreate) {
+                 this.pDialogCreate = this.loadFragment({name: "ux.zanalytics.view.create"});
+             }
+             this.pDialogCreate.then(function (oDialog) { // oDialog.open();
+
 
 
                 var oTable = this.getView().byId("IDOrderTable");
@@ -157,28 +168,29 @@ sap.ui.define([
 
                 var length = oTable.getSelectedItems().length;
 
-                if (length > 0) {
-                    dialogcreate.open();
+                                                if (length > 0) {
+                                                    oDialog.open();
 
 
-                    // Loading selected row data in create fragment
+                                                    // Loading selected row data in create fragment
 
-                    // var oTable = this.getView().byId("IDOrderTable");
+                                                    // var oTable = this.getView().byId("IDOrderTable");
 
-                    var oCreateDialog = this.getView().byId("CreateDialog");
+                                                    var oCreateDialog = this.getView().byId("CreateDialog");
 
-                    var oPOID = oTable.getSelectedContextPaths()[0].split('(')[1].substr(1, 9);
+                                                    var oPOID = oTable.getSelectedContextPaths()[0].split('(')[1].substr(1, 9);
 
-                    var oCreateModel = new sap.ui.model.json.JSONModel("/sap/opu/odata/sap/EPM_REF_APPS_PO_APV_SRV/PurchaseOrders('" + oPOID + "')?$format=json");
+                                                    var oCreateModel = new sap.ui.model.json.JSONModel("/sap/opu/odata/sap/EPM_REF_APPS_PO_APV_SRV/PurchaseOrders('" + oPOID + "')?$format=json");
 
-                    this.getView().byId("IdCreateForm").setModel(oCreateModel, "oCreateModel");
+                                                    this.getView().byId("IdCreateForm").setModel(oCreateModel, "oCreateModel");
 
-                } else {
+                                                } else {
 
-                    MessageToast.show("Please select a row");
-                }
-
-            },onCloseCreateDialog: function () {
+                                                    MessageToast.show("Please select a row");
+                                                }
+                                            });
+            },
+            onCloseCreateDialog: function () {
                 this.getView().byId("CreateDialog").close();
 
             },// logic create operation
@@ -494,20 +506,7 @@ sap.ui.define([
                     }},
                 onCloseUpdateDialog : function () {
                     this.getView().byId("UpdateDialog").close();
-                }, // Fragments controller logic -1.58 above ,  1.96 below.onOpenDialog1: function () { // create dialog lazilyif (!this.pDialog) {this.pDialog = this.loadFragment({name: "ux.zanalytics.view.create"});}this.pDialog.then(function (oDialog) {oDialog.open();});},// async onOpenSysErrorDialog() { // create dialog lazily//     this.oDialog ?? = await this.loadFragment({name: "ux.zanalytics.view.SysError"});//     this.oDialog.open();//     var oSysModel = new sap.ui.model.json.JSONModel("/sap/opu/odata/sap/EPM_REF_APPS_PO_APV_SRV/PurchaseOrders('300001998')?$expand=Supplier&$format=json");//     this.getView().byId("tblsysTable").setModel(oSysModel, "oSysModel");// },onOpenSysErrorDialog: async function () {const dialogsysError = this.byId("SysDialog") || await this.loadFragment({name: "ux.zanalytics.view.SysError"});dialogsysError.open();},onCloseAppDialog: function () {this.getView().byId("SysDialog").close();},// SORThandleSortButtonPressed: function () {this.getViewSettingsDialog("ux.zanalytics.view.Sort").then(function (oViewSettingsDialog) {oViewSettingsDialog.open();});},handleSortDialogConfirm: function (oEvent) {var oTable = this.byId("IDOrderTable"),mParams = oEvent.getParameters(),oBinding = oTable.getBinding("items"),sPath,bDescending,aSorters = [];sPath = mParams.sortItem.getKey();bDescending = mParams.sortDescending;aSorters.push(new Sorter(sPath, bDescending));// sort login in ui// apply the selected sort and group settingsoBinding.sort(aSorters);},// FilterhandleFilterButtonPressed: function () {this.getViewSettingsDialog("ux.zanalytics.view.Filter").then(function (oViewSettingsDialog) {oViewSettingsDialog.open();});},handleFilterDialogConfirm: function (oEvent) {var oTable = this.byId("IDOrderTable"),mParams = oEvent.getParameters(),oBinding = oTable.getBinding("items"),aFilters = [];mParams.filterItems.forEach(function (oItem) {var aSplit = oItem.getKey().split("___"),
-                sPath = aSplit[0],
-                sOperator = aSplit[1],
-                sValue1 = aSplit[2],
-                sValue2 = aSplit[3],
-                oFilter = new Filter(sPath, sOperator, sValue1, sValue2);
-                // logic for fitleraFilters.push(oFilter);});// apply filter settingsoBinding.filter(aFilters);// update filter bar// this.byId("vsdFilterBar").setVisible(aFilters.length > 0);// this.byId("vsdFilterLabel").setText(mParams.filterString);},// GroupinghandleGroupButtonPressed: function () {this.getViewSettingsDialog("ux.zanalytics.view.GroupBy").then(function (oViewSettingsDialog) {oViewSettingsDialog.open();});},handleGroupDialogConfirm: function (oEvent) {var oTable = this.byId("IDOrderTable"),mParams = oEvent.getParameters(),oBinding = oTable.getBinding("items"),sPath,bDescending,vGroup,aGroups = [];if (mParams.groupItem) {sPath = mParams.groupItem.getKey();bDescending = mParams.groupDescending;vGroup = this.mGroupFunctions[sPath];aGroups.push(new Sorter(sPath, bDescending, vGroup));// group logic - 3rd parameter// apply the selected group settingsoBinding.sort(aGroups);} else if (this.groupReset) {oBinding.sort();this.groupReset = false;}},// reset groupresetGroupDialog: function (oEvent) {this.groupReset = true;},getViewSettingsDialog: function (sDialogFragmentName) {var pDialog = this._mViewSettingsDialogs[sDialogFragmentName];if (! pDialog) {pDialog = Fragment.load({id: this.getView().getId(), name: sDialogFragmentName, controller: this}).then(function (oDialog) {
-                // if (Device.system.desktop) {
-                //     oDialog.addStyleClass("sapUiSizeCompact");
-                // }
-                return oDialog;
-            }
-        );
-        this._mViewSettingsDialogs[sDialogFragmentName] = pDialog;
-    }
-    return pDialog;
-}});});
+                }, 
+                
+            });
+        });
