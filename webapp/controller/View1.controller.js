@@ -79,9 +79,19 @@ sap.ui.define([
 
                 var sUrl = "/sap/opu/odata/sap/EPM_REF_APPS_PO_APV_SRV/PurchaseOrderItems(POId='300001998',POItemPos='30')?$select=Price,GrossAmount&$format=json";
 
-                var CompModel = new sap.ui.model.json.JSONModel("/sap/opu/odata/sap/EPM_REF_APPS_PO_APV_SRV/PurchaseOrderItems(POId='300001998',POItemPos='30')?$select=Price,GrossAmount&$format=json");
+        //        var CompModel = new sap.ui.model.json.JSONModel("/sap/opu/odata/sap/EPM_REF_APPS_PO_APV_SRV/PurchaseOrderItems(POId='300001998',POItemPos='30')");
 
-                this.getView().byId("IDKPIComp").setModel(CompModel, "CompModel");
+               // this.getView().byId("IDKPIComp").setModel(CompModel, "CompModel");
+         //       this.getView().byId("IDKPIComp").setModel(CompModel);
+
+
+                // new comaprison model
+
+           var sUrl = "/sap/opu/odata/sap/EPM_REF_APPS_PO_APV_SRV/PurchaseOrderItems(POId='300001998',POItemPos='30')?$select=Price,GrossAmount&$format=json";
+
+var newModel = new JSONModel();
+this.getView().byId("IDKPIComp").setModel(newModel);
+newModel.loadData(sUrl);
 
 
                 // KPI 2
@@ -507,6 +517,109 @@ sap.ui.define([
                 onCloseUpdateDialog : function () {
                     this.getView().byId("UpdateDialog").close();
                 }, 
+
+
+                onOpenSysErrorDialog:function(){
+
+                        var that = this;
+
+                        if (!this.pDialogError) {
+                            this.pDialogError = this.loadFragment({name: "ux.zanalytics.view.SysError"});
+                        }
+                        this.pDialogError.then(function (oDialog) { 
+                            
+                            oDialog.open();
+                        });
+
+},
+
+onCloseAppDialog:function(){
+    this.getView().byId("SysDialog").close();
+},
+
+
+
+
+// CRUD operations models for UI table 
+
+onAfterRendering:function(){ 
+
+
+    var sServiceUrl = "/sap/opu/odata/sap/EPM_REF_APPS_PO_APV_SRV/";
+   var sFlightSrv ="/sap/opu/odata/IWFND/RMTSAMPLEFLIGHT/";
+   var sGWBasicSrv="/sap/opu/odata/iwbep/GWSAMPLE_BASIC/";
+
+
+ 
+//Flight Model
+   var oModelFlight = new sap.ui.model.odata.ODataModel(sFlightSrv);
+             //  this.getView().byId("tblUITable").setModel(oModelFlight);
+
+
+// GW basic model
+               var oModelGW = new sap.ui.model.odata.ODataModel(sGWBasicSrv);
+          this.getView().byId("tblUITable").setModel(oModelGW);
+
+},
+numberformat:function(oValue){
+var oInput = oValue;
+return parseInt(oInput);
+},
+
+onAddRow:function(oEvent){
+var oInsertRows = 3;
+var oRow = {
+
+         "ProductID": "",
+        "TypeCode": "",
+        "Category": "",
+        "Name": "",
+        "NameLanguage": "",
+        "Description": "",
+        "DescriptionLanguage": "",
+        "SupplierID": "",
+        "SupplierName": "",
+        "TaxTarifCode":"" ,
+        "MeasureUnit": "",
+        "WeightMeasure": "",
+        "WeightUnit": "",
+        "CurrencyCode": "",
+        "Price": "",
+        "Width": "",
+        "Depth": "",
+        "Height": "",
+        "DimUnit": "",
+        "CreatedAt": "",
+        "ChangedAt": "",
+}
+
+//   var Records = [];
+//    var O ={};
+// for(var i=0;i<oInsertRows;i++){
+
+//     Records[i] = oRow[i];
+//     Records.push();
+// }
+
+
+
+var oModel= this.getView().byId("tblUITable").getModel();
+
+var oNewModel = new JSONModel();
+
+var oData =oModel.getData();
+oData.d.results.push(oRow);
+oNewModel.setData(oData);
+this.getView().byId("tblUITable").setModel(oNewModel);
+
+// var oData = oModel.getData();
+// oData.d.results.push(oRow);
+// oModel.setData(oData);
+
+},
+
+
+
                 
             });
         });
